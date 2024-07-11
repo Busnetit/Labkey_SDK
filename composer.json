@@ -1,0 +1,27 @@
+{
+    "name": "labkey/sdk",
+    "description": "SDK for developent LABKEY API",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Labkey"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/http": "9.x-dev",
+        "guzzlehttp/guzzle": "^7.0",
+        "illuminate/support": "9.x-dev",
+        "illuminate/container": "9.x-dev",
+        "illuminate/routing": "9.x-dev",
+        "illuminate/auth": "9.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Labkey\\App\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
