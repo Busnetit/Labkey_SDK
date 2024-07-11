@@ -19,7 +19,6 @@ class TemplateLKController extends AuthorizeLKController {
         "user_id" => $user_id,
         "template_id" => $template_id,
         "timestamp" => $timestamp]);
-       dd($response->body());
         $this->badRequest($response);
         if($response->json('status') != 'KO'){
             return $response->json('message');
