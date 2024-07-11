@@ -36,7 +36,7 @@ class UserLKController extends AuthorizeLKController{
      */
     public function getUser(string $user_id='',string $first_name = '', string $last_name = '', string $tag='', string $email='', int|null $limit=null,  int|null $offset=null): array{
         $response=Http::withToken($this->getToken())->get($this->url.'getusers',get_defined_vars());
-        if($response->status() !== 404 ){ //NON CAMBIARE MAI QUESTO CODICE DI ERRORE IN QUANTO è HARDCODATO PER QUANTO RIGUARDA LE INTEGRAZIONI per maggiori info vai a vedere nel pannello la funzione getUsersAllV2 
+        if($response->status() !== 404 ){ //NON CAMBIARE MAI QUESTO CODICE DI ERRORE IN QUANTO è HARDCODATO PER QUANTO RIGUARDA LE INTEGRAZIONI per maggiori info vai a vedere nel pannello la funzione getUsersAllV2
             $this->badRequest($response);
         }
         if($response->json('status') != 'KO'){
@@ -160,5 +160,4 @@ class UserLKController extends AuthorizeLKController{
         }
         return[];
     }
-
 }
