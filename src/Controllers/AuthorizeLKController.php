@@ -41,7 +41,7 @@ class AuthorizeLKController extends Controller {
             $this->badRequest($response);
             self::$barer= $response->json('token');
             self::$barer_last=time();
-            dump('refresho token barer _  '. self::$barer_last);
+            //dump('refresho token barer _  '. self::$barer_last);
         }
         return self::$barer;
     }

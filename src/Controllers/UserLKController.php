@@ -62,7 +62,7 @@ class UserLKController extends AuthorizeLKController{
     public function addKeyUser(string $user_id, string $nfc_key_id){
         $response=Http::withToken($this->getToken())->put($this->url.'addkey2user',get_defined_vars());
         $this->badRequest($response);
-        if($response->json('status') != 'OK'){
+        if($response->json('status') != 'KO'){
             return $response->json('content');
         }
         return[];
