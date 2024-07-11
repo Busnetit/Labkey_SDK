@@ -153,7 +153,6 @@ class UserLKController extends AuthorizeLKController{
     public function doGrantAccess(int $user_id, string $data, int $key_id):array{
         // dd(get_defined_vars());
         $response=Http::withToken($this->getToken())->post($this->url.'grantaccess',get_defined_vars());
-        dd($response->body());
         $this->badRequest($response);
         if($response->json('status') != 'OK'){
             return $response->json('insert');

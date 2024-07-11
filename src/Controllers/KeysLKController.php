@@ -32,7 +32,6 @@ class KeysLKController extends AuthorizeLKController
     public function getUnusedNFC()
     {
         $response = Http::withToken($this->getToken())->get($this->url . "getunusednfc");
-        dd($response->body());
         $this->badRequest($response);
         if($response->json('status') != 'KO'){
             return $response->json('message');
@@ -46,9 +45,20 @@ class KeysLKController extends AuthorizeLKController
     public function create(string $nfc_key_code, string $nfc_key_name, bool|null $force_hex = false): array
     {
         $response = Http::withToken($this->getToken())->put($this->url . "addkey", get_defined_vars());
-        dd($response->body());
         $this->badRequest($response);
-        return $response->json('message');
+        if($response->json('status') != 'KO'){
+            return $response->json('message');
+        }
+        return [];
     }
 
+    public function getQrCode(int $user_id)
+    {
+        $response = Http::withToken($this->getToken())->post($this->url . "getqrcode",get_defined_vars());
+        $this->badRequest($response);
+        if($response->json('status') != 'KO'){
+            return $response->json('message');
+        }
+        return [];
+    }
 }

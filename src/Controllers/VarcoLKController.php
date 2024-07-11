@@ -8,7 +8,6 @@ class VarcoLKController extends AuthorizeLKController
 {
     public function getVarcos(string $unique_name = '', int|null $labkey_id = null ,string $key_tipe = ''):array {
         $response=Http::withToken($this->getToken())->get($this->url.'getlabkeys',get_defined_vars());
-        dd($response->body());
         $this->badRequest($response);
         if($response->json('status') != 'KO'){
             return $response->json('message');
