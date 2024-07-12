@@ -1,1 +1,4 @@
 /vendor
+/exclude
+composer.lock
+.env
