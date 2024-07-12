@@ -158,4 +158,12 @@ class UserLKController extends AuthorizeLKController{
         }
         return[];
     }
+    public function changeStatus(int $user_id,int $status){
+        $response = Http::withToken($this->getToken())->post($this->url.'users/changeStatus',get_defined_vars());
+        $this->badRequest($response);
+        if($response->json('status') != 'OK'){
+            return $response->json('message');
+        }
+        return true;
+    }
 }
