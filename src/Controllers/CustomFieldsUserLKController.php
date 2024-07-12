@@ -9,7 +9,12 @@ class CustomFieldsUserLKController extends AuthorizeLKController
 
     public function create(int $user_id, int $id_field, string $value, int $can_disable_user = null)
     {
-        $response=Http::withToken($this->getToken())->post($this->url.'customfieldsuser/'.$user_id.'/'.$id_field.'/create', ["value"=>$value, "can_disable_user" => $can_disable_user]);
+        $params = [];
+        $params['value'] = $value;
+        if(isset($can_disable_user)){
+            $params['can_disable_user'] = $can_disable_user;
+        }
+        $response=Http::withToken($this->getToken())->post($this->url.'customfieldsuser/'.$user_id.'/'.$id_field.'/create', $params);
         $this->badRequest($response);
         if($response->json('status') != 'OK'){
             return $response->json('message');
@@ -19,7 +24,12 @@ class CustomFieldsUserLKController extends AuthorizeLKController
 
     public function update(int $user_id,int $id_field,string $value, int $can_disable_user = null)
     {
-        $response=Http::withToken($this->getToken())->post($this->url.'customfieldsuser/'.$user_id.'/'.$id_field.'/update', ["value"=>$value, "can_disable_user" => $can_disable_user]);
+        $params = [];
+        $params['value'] = $value;
+        if(isset($can_disable_user)){
+            $params['can_disable_user'] = $can_disable_user;
+        }
+        $response=Http::withToken($this->getToken())->post($this->url.'customfieldsuser/'.$user_id.'/'.$id_field.'/update', $params );
         $this->badRequest($response);
         if($response->json('status') != 'OK'){
             return $response->json('message');
