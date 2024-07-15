@@ -25,4 +25,12 @@ class TemplateLKController extends AuthorizeLKController {
         }
         return [];
     }
+    public function getByID(int $template_id){
+        $response =  Http::withToken($this->getToken())->withUserAgent('SDK-Labkey')->get($this->url."templates/detail",get_defined_vars());
+        $this->badRequest($response);
+        if($response->json('status') != 'KO'){
+            return $response->json('message');
+        }
+        return [];
+    }
 }
