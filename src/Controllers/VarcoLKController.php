@@ -26,10 +26,8 @@ class VarcoLKController extends AuthorizeLKController
     {
         $response=Http::withToken($this->getToken())->post($this->url.'isAccessible',get_defined_vars());
         $this->badRequest($response);
-        if($response->json('status') != 'KO'){
-            return $response->json('message');
-        }
-        return [];
+       return $response->json('message');
+       
     }
 
     public function editaccess(int $user_id,int $key_id,string $data){
