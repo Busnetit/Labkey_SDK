@@ -22,5 +22,14 @@ class VarcoLKController extends AuthorizeLKController
         }
         return [];
     }
+    public function isAccessible(string $unique_name,int $from_date,int $to_date,string $id_rele)
+    {
+        $response=Http::withToken($this->getToken())->post($this->url.'isAccessible',get_defined_vars());
+        $this->badRequest($response);
+        if($response->json('status') != 'KO'){
+            return $response->json('message');
+        }
+        return [];
+    }
 
 }
