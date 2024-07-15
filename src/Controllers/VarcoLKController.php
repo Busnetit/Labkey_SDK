@@ -26,7 +26,7 @@ class VarcoLKController extends AuthorizeLKController
     {
         $response=Http::withToken($this->getToken())->post($this->url.'isAccessible',get_defined_vars());
         $this->badRequest($response);
-        return boolval($response->json('message'));
+        return $response->json('message');
        
     }
 
