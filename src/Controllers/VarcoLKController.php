@@ -32,4 +32,14 @@ class VarcoLKController extends AuthorizeLKController
         return [];
     }
 
+    public function editaccess(int $user_id,int $key_id,string $data){
+        $response=Http::withToken($this->getToken())->post($this->url.'grantaccess',get_defined_vars());
+        dd($response->body());
+        $this->badRequest($response);
+        if($response->json('status') != 'KO'){
+            return $response->json('message');
+        }
+        return [];
+    }
+
 }
