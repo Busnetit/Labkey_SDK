@@ -25,7 +25,6 @@ class VarcoLKController extends AuthorizeLKController
     public function isAccessible(string $unique_name,int $from_date,int $to_date,string $id_rele)
     {
         $response=Http::withToken($this->getToken())->post($this->url.'isAccessible',get_defined_vars());
-        dd($response->body());
         $this->badRequest($response);
         return boolval($response->json('message'));
        
