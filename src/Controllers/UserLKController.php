@@ -44,8 +44,7 @@ class UserLKController extends AuthorizeLKController{
         }
         return [];
     }
-
-    public function updateUser(int $user_id, string|null $name = '',string|null $surname = '', string|null $tag = '',string|null $email = '', array|null $tags = []){
+    public function updateUser(int $user_id, string|null $name = '',string|null $surname = '', string|null $email = '',string|null $prefix = '',string|null $phone = '', array|null $tags = []){
         $response = Http::withToken($this->getToken())->PUT($this->url.'updateuser',get_defined_vars());
         $this->badRequest($response);
         if($response->json('status') != 'KO'){
