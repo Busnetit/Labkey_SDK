@@ -42,10 +42,7 @@ class VarcoLKController extends AuthorizeLKController
     public function getUserVarcoDetails(int $user_id){
         $response = Http::withToken($this->getToken())->withUserAgent('SDK-Labkey')->get($this->url.'getuservarcodetails',get_defined_vars());
         $this->badRequest($response);
-        if($response->json('status') != 'KO'){
-            return $response->json('message');
-        }
-        return [];
+        return json_decode($response->body());
     }
 
 }
