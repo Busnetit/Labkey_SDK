@@ -11,72 +11,114 @@ use Illuminate\Support\Facades\App;
 class QRCodeLKController extends Controller
 {
 
-    private $path_background;
+    private $path_logo;
     private $path_font;
+    private $site_url;
 
-    public function __construct($path_background, $path_font)
+    public function __construct($path_logo, $path_font,$site_url = null)
     {
-        $this->path_background = $path_background;
+        $this->path_logo = $path_logo;
         $this->path_font = $path_font;
+        $this->site_url = $site_url;
     }
 
-    public function generateImage(string $code, $path_to_save,$first_name = null,$last_name = null,$email = null,$phone = null)
+    public function generateImage(string $code, $path_to_save,$first_name = null,$last_name = null,$email = null,$phone = null,$pin_access =  null)
     {
-        if (!function_exists('imagecreatefromjpeg')) {
-            throw new \Exception("Function imagecreatefromjpeg() does not exists, you have to install GD Library on your system.");
-            exit;
-        }
-        $photo = imagecreatefromjpeg($this->path_background);
-        imagealphablending($photo, false);
-        if (!function_exists('imagecreatefromstring')) {
-            throw new \Exception("Function imagecreatefromstring() does not exists, you have to install GD Library on your system.");
-            exit;
-        }
 
-        $data = base64_decode($this->generateQrCodeOnly($code));
-        $im = imagecreatefromstring($data);
-        $x = imagesx($im);
-        imagecopy($photo, $im, (500 / 2) - ($x / 2), 280, 0, 0, 360, 360);
+        $width = 400;
+        $height = 700;
+        $image = imagecreatetruecolor($width, $height);
+        $bgColor = imagecolorallocate($image, 255, 255, 255); // Bianco
+        $textColor = imagecolorallocate($image, 0, 0, 0); // Nero
+        $ColoreTestoBlu = imagecolorallocate($image, 1, 113, 205); // Blu
+        imagefill($image, 0, 0, $bgColor);
+        $fontSize = 20;
+        $x = 150;
+        $y = 150;
 
-        $ColoreTestoBlack = imagecolorallocate($photo, 128,128,128);
-        $ColoreTestoBlu = imagecolorallocate($photo, 1, 113, 205);
-        $font_size = 15;
-
+        //region logo
+        //todo create from png or jpg, it's depends on the image
+        $logo = imagecreatefrompng($this->path_logo);
+        $logoWidth = imagesx($logo);
+        $logoHeight = imagesy($logo);
+        imagecopy($image, $logo, 15, 0, 0, 0, $logoWidth, $logoHeight);
+        //endregion
 
         if(!empty($first_name)){
-            $bbox = imagettfbbox($font_size, 0, $this->path_font,$first_name);
-            $textWidth = $bbox[2] - $bbox[0];
-            $x = (500 / 2) - ($textWidth / 2);
-            imagettftext($photo, $font_size, 0, $x, 240, $ColoreTestoBlack, $this->path_font,$first_name);
+            // Calcolo della posizione del testo (centrato)
+            $textBox = imagettfbbox($fontSize, 0, $this->path_font, $first_name);
+            $textWidth = $textBox[2] - $textBox[0];
+            $textHeight = $textBox[1] - $textBox[7];
+            $y+= $textHeight;
+            // Disegno del testo
+            imagettftext($image, $fontSize, 0,(int)($width-$textWidth)/2,(int) $y, $textColor, $this->path_font, $first_name);
+            $y+=20;
         }
         if(!empty($last_name)){
-            $bbox = imagettfbbox($font_size, 0, $this->path_font,$last_name);
-            $textWidth = $bbox[2] - $bbox[0];
-            $x = (500 / 2) - ($textWidth / 2);
-            imagettftext($photo, $font_size, 0, $x, 290, $ColoreTestoBlack, $this->path_font,$last_name);
-
+            // Calcolo della posizione del testo (centrato)
+            $textBox = imagettfbbox($fontSize, 0, $this->path_font, $last_name);
+            $textWidth = $textBox[2] - $textBox[0];
+            $textHeight = $textBox[1] - $textBox[7];
+            $y+= $textHeight;
+            // Disegno del testo
+            imagettftext($image, $fontSize, 0, (int)($width-$textWidth)/2,(int) $y, $textColor, $this->path_font, $last_name);
         }
+        //region qrcode
+        $data = base64_decode($this->generateQrCodeOnly($code));
+        $im = imagecreatefromstring($data);
+        $y+=20;
+        imagecopy($image, $im, (int)(($width - imagesx($im))/2) , $y, 0, 0, 350, 350);
+        //endregion
+        $y+=imagesy($im)+45;
+
         if(!empty($phone)){
-            $bbox = imagettfbbox($font_size, 0, $this->path_font,$phone);
-            $textWidth = $bbox[2] - $bbox[0];
-            $x = (500 / 2) - ($textWidth / 2);
-            imagettftext($photo, $font_size, 0, $x, 740, $ColoreTestoBlack, $this->path_font,$phone);
+            $textBox = imagettfbbox($fontSize, 0, $this->path_font, $phone);
+            $textWidth = $textBox[2] - $textBox[0];
+            $textHeight = $textBox[1] - $textBox[7];
+            $y+= $textHeight;
+            imagettftext($image, $fontSize, 0, (int)($width-$textWidth)/2,(int) $y, $textColor, $this->path_font, $phone);
+            $y+=10;
         }
 
         if(!empty($email)){
-            $bbox = imagettfbbox($font_size, 0, $this->path_font,$email);
-            $textWidth = $bbox[2] - $bbox[0];
-            $x = (500 / 2) - ($textWidth / 2);
-            imagettftext($photo, $font_size, 0, $x - 195, 690, $ColoreTestoBlack, $this->path_font,$email);
+            $textBox = imagettfbbox($fontSize, 0, $this->path_font, $email);
+            $textWidth = $textBox[2] - $textBox[0];
+            $textHeight = $textBox[1] - $textBox[7];
+            $y+= $textHeight;
+            // Disegno del testo
+            imagettftext($image, $fontSize, 0, (int)($width-$textWidth)/2,(int) $y, $textColor, $this->path_font, $email);
+            $y+=15;
         }
 
-        imagejpeg($photo, $path_to_save);
-        return $path_to_save;
-    }
 
+        if(!empty($pin_access)){
+            $textBox = imagettfbbox($fontSize, 0, $this->path_font, $pin_access);
+            $textWidth = $textBox[2] - $textBox[0];
+            $textHeight = $textBox[1] - $textBox[7];
+            $y+= $textHeight;
+            // Disegno del testo
+            imagettftext($image, $fontSize, 0, (int)($width-$textWidth)/2,(int) $y, $textColor, $this->path_font, $pin_access);
+            $y+=1;
+        }
+
+
+        if(!empty($this->site_url)){
+            $textBox = imagettfbbox($fontSize, 0, $this->path_font, $this->site_url);
+            $textWidth = $textBox[2] - $textBox[0];
+            $textHeight = $textBox[1] - $textBox[7];
+            $y+= $textHeight;
+            // Disegno del testo
+            imagettftext($image, $fontSize, 0, (int)($width-$textWidth)/2,690, $ColoreTestoBlu, $this->path_font, $this->site_url);
+        }
+
+
+
+
+        imagejpeg($image, $path_to_save);
+    }
     private function generateQrCodeOnly(string $code)
     {
-        $url = "https://image-charts.com/chart?chs=250x250&cht=qr&chl=".urlencode($code)."";
+        $url = "https://image-charts.com/chart?chs=130x130&cht=qr&chl=".urlencode($code)."";
         $img = file_get_contents($url);
         return base64_encode($img);
     }
