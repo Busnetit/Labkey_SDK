@@ -108,7 +108,7 @@ class QRCodeLKController extends Controller
             $textHeight = $textBox[1] - $textBox[7];
             $y+= $textHeight;
             // Disegno del testo
-            imagettftext($image, $fontSize, 0, (int)($width-$textWidth)/2,690, $ColoreTestoBlu, $this->path_font, $this->site_url);
+            imagettftext($image, $fontSize, 0, (int)($width-$textWidth)/2,$height-$textHeight+10, $ColoreTestoBlu, $this->path_font, $this->site_url);
         }
 
 
