@@ -41,7 +41,7 @@ class QRCodeLKController extends Controller
         $logo = imagecreatefrompng($this->path_logo);
         $logoWidth = imagesx($logo);
         $logoHeight = imagesy($logo);
-        imagecopy($image, $logo, 15, 0, 0, 0, $logoWidth, $logoHeight);
+        imagecopy($image, $logo, (int)($width-$logoWidth)/2, 0, 0, 0, $logoWidth, $logoHeight);
         //endregion
 
         if(!empty($first_name)){
