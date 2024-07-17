@@ -67,7 +67,7 @@ class QRCodeLKController extends Controller
         $data = base64_decode($this->generateQrCodeOnly($code));
         $im = imagecreatefromstring($data);
         $y+=20;
-        imagecopy($image, $im, (int)(($width - imagesx($im))/2) , $y, 0, 0, 350, 350);
+        imagecopy($image, $im, (int)(($width - imagesx($im))/2) , $y, 0, 0, imagesx($im), imagesy($im));
         //endregion
         $y+=imagesy($im)+45;
 
