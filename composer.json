@@ -9,12 +9,12 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "illuminate/http": "9.x-dev",
+        "illuminate/http": "9.x",
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/support": "9.x-dev",
-        "illuminate/container": "9.x-dev",
-        "illuminate/routing": "9.x-dev",
-        "illuminate/auth": "9.x-dev"
+        "illuminate/support": "9.x",
+        "illuminate/container": "9.x",
+        "illuminate/routing": "9.x",
+        "illuminate/auth": "9.x"
     },
     "autoload": {
         "psr-4": {
