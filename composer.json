@@ -7,14 +7,14 @@
             "name": "Labkey"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
-        "illuminate/http": "9.x",
+        "illuminate/http": "^9.x",
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/support": "9.x",
-        "illuminate/container": "9.x",
-        "illuminate/routing": "9.x",
-        "illuminate/auth": "9.x"
+        "illuminate/support": "^9.x",
+        "illuminate/container": "^9.x",
+        "illuminate/routing": "^9.x",
+        "illuminate/auth": "^9.x"
     },
     "autoload": {
         "psr-4": {
@@ -23,5 +23,6 @@
         "files": [
             "src/helpers.php"
         ]
-    }
+    },
+    "version": "1.0.0"
 }
