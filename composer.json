@@ -10,7 +10,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "illuminate/http": "^9.0",
+        "illuminate/http": "^9.0.0",
         "guzzlehttp/guzzle": "^7.0",
         "illuminate/support": "^9.0",
         "illuminate/container": "^9.0",
