@@ -1,5 +1,6 @@
 {
     "name": "labkey/sdk",
+    "version": "1.1.0",
     "description": "SDK for developent LABKEY API",
     "type": "library",
     "authors": [
@@ -23,6 +24,5 @@
         "files": [
             "src/helpers.php"
         ]
-    },
-    "version": "1.0.1"
+    }
 }
