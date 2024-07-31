@@ -18,8 +18,9 @@ class UserLKController extends AuthorizeLKController{
      * @return string
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function create(string $name, string $surname, string $email='', string $phone='', string $prefix='',array $tags = []) :array{
+    public function create(string $name, string $surname, string $email='', string $phone='', string $prefix='',array $tags = [] ,array $fields = [],int $status = null) :array{
         $response=Http::withToken($this->getToken())->put($this->url.'adduser',get_defined_vars());
+      // dd($response->body());
         $this->badRequest($response);
         return $response->json('message');
     }
