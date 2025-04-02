@@ -228,7 +228,7 @@ class UserLKController extends AuthorizeLKController
         string|null $message = null,
         string|null $cc_emails = null,
 
-    ): array {
+    ): string {
         $values = get_defined_vars();
         $values['operator_email'] = $this->email;
         $response = Http::withToken($this->getToken())->post($this->url . 'sendemail', $values);
