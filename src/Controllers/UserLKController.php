@@ -14,9 +14,10 @@ class UserLKController extends AuthorizeLKController
      * @param string $email
      * @param string $phone
      * @param string $prefix
-     *
-     * @return string
-     * @throws \Illuminate\Http\Client\RequestException
+     * @param array $tags
+     * @param array $fields
+     * @param int|null $status
+     * @return array
      */
     public function create(
         string $name,
@@ -36,13 +37,16 @@ class UserLKController extends AuthorizeLKController
 
     /**
      * @param string $user_id
+     * @param string $first_name
+     * @param string $last_name
      * @param string $tag
      * @param string $email
      * @param int|null $limit
      * @param int|null $offset
-     *
+     * @param bool $getGrantInfo
+     * @param int|null $created_at_from
+     * @param int|null $created_at_to
      * @return array
-     * @throws \Illuminate\Http\Client\RequestException
      */
     public function getUser(
         string $user_id = '',
@@ -67,6 +71,18 @@ class UserLKController extends AuthorizeLKController
         return [];
     }
 
+    /**
+     * @param int $user_id
+     * @param string|null $name
+     * @param string|null $surname
+     * @param string|null $email
+     * @param string|null $phone
+     * @param string|null $prefix
+     * @param array|null $tags
+     * @param array $fields
+     * @param int|null $status
+     * @return array
+     */
     public function updateUser(
         int $user_id,
         string|null $name = '',
@@ -90,7 +106,7 @@ class UserLKController extends AuthorizeLKController
      * @param string $user_id
      * @param string $nfc_key_id
      *
-     * @throws \Illuminate\Http\Client\RequestException
+     * @return array
      */
     public function addKeyUser(string $user_id, string $nfc_key_id)
     {
@@ -105,7 +121,7 @@ class UserLKController extends AuthorizeLKController
     /**
      * @param int $user_id
      *
-     * @throws \Illuminate\Http\Client\RequestException
+     * @return array
      */
     public function deleteUser(int $user_id)
     {
@@ -117,6 +133,27 @@ class UserLKController extends AuthorizeLKController
         return [];
     }
 
+    /**
+     * @param int $user_id
+     * @param int $key_id
+     * @param string $unique_name
+     * @param string $tt
+     * @param string $tv
+     * @param string|null $datei
+     * @param string|null $datef
+     * @param string|null $houri
+     * @param string|null $hourf
+     * @param string|null $mo
+     * @param string|null $tu
+     * @param string|null $we
+     * @param string|null $th
+     * @param string|null $fr
+     * @param string|null $sa
+     * @param string|null $su
+     * @param string|null $command_device_id
+     * @param array|null $id_rele
+     * @return array
+     */
     public function grantAccess(
         int $user_id,
         int $key_id,
@@ -184,6 +221,12 @@ class UserLKController extends AuthorizeLKController
         return $this->doGrantAccess($user_id, json_encode($data), $key_id);
     }
 
+    /**
+     * @param int $user_id
+     * @param string $data
+     * @param int $key_id
+     * @return array
+     */
     public function doGrantAccess(int $user_id, string $data, int $key_id): array
     {
         $response = Http::withToken($this->getToken())->post($this->url . 'grantaccess', get_defined_vars());
@@ -194,7 +237,12 @@ class UserLKController extends AuthorizeLKController
         return [];
     }
 
-    public function changeStatus(int $user_id, int $status)
+    /**
+     * @param int $user_id
+     * @param int $status
+     * @return true
+     */
+    public function changeStatus(int $user_id, int $status): bool
     {
         $response = Http::withToken($this->getToken())->post($this->url . 'users/changeStatus', get_defined_vars());
         $this->badRequest($response);
@@ -204,7 +252,11 @@ class UserLKController extends AuthorizeLKController
         return true;
     }
 
-    public function getStatus(int $user_id)
+    /**
+     * @param int $user_id
+     * @return mixed
+     */
+    public function getStatus(int $user_id): mixed
     {
         $response = Http::withToken($this->getToken())->get($this->url . 'users/getStatus', get_defined_vars());
         $this->badRequest($response);
@@ -237,5 +289,23 @@ class UserLKController extends AuthorizeLKController
         $response = Http::withToken($this->getToken())->post($this->url . 'sendemail', $values);
         $this->badRequest($response);
         return $response->json('message');
+    }
+
+
+    /**
+     * @param int $user_id
+     * @param int $involved_associations
+     * @return array
+     */
+    public function getGrantInfo(int $involved_associations): array
+    {
+        $response = Http::withToken($this->getToken())->get($this->url . 'getGrantInfo', get_defined_vars());
+        $this->badRequest($response);
+        if ($response->json('status') === 'OK') {
+            $response= $response->json();
+            unset($response['status']);
+            return $response;
+        }
+        return [];
     }
 }
