@@ -51,7 +51,10 @@ class UserLKController extends AuthorizeLKController
         string $tag = '',
         string $email = '',
         int|null $limit = null,
-        int|null $offset = null
+        int|null $offset = null,
+        bool $getGrantInfo = false,
+        int|null $created_at_from=null,
+        int|null $created_at_to=null,
     ): array {
         $response = Http::withToken($this->getToken())->get($this->url . 'getusers', get_defined_vars());
         if ($response->status(
