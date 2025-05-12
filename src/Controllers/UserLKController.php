@@ -41,6 +41,7 @@ class UserLKController extends AuthorizeLKController
      * @param string $last_name
      * @param string $tag
      * @param string $email
+     * @param string $phone
      * @param int|null $limit
      * @param int|null $offset
      * @param bool $getGrantInfo
@@ -54,6 +55,7 @@ class UserLKController extends AuthorizeLKController
         string $last_name = '',
         string $tag = '',
         string $email = '',
+        string $phone = '',
         int|null $limit = null,
         int|null $offset = null,
         bool $getGrantInfo = false,
