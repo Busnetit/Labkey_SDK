@@ -310,4 +310,14 @@ class UserLKController extends AuthorizeLKController
         }
         return [];
     }
+
+
+    public function updatePinPad(int $user_id, string $new_pinpad_key_code):array{
+        $response = Http::withToken($this->getToken())->post($this->url . 'updatepinpad', get_defined_vars());
+        $this->badRequest($response);
+        if ($response->json('status') !== 'OK') {
+            return $response->json('message');
+        }
+        return [];
+    }
 }
