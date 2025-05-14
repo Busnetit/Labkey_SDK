@@ -62,7 +62,7 @@ class KeysLKController extends AuthorizeLKController
         return [];
     }
 
-    public function getAllPinpad(int|null $limit = null, int|null $offest)
+    public function getAllPinpad(int|null $limit = null, int|null $offest=null)
     {
         $response = Http::withToken($this->getToken())->get($this->url . "getallpinpad", get_defined_vars());
         $this->badRequest($response);
