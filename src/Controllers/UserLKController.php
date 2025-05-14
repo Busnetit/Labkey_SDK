@@ -27,7 +27,8 @@ class UserLKController extends AuthorizeLKController
         string $prefix = '',
         array $tags = [],
         array $fields = [],
-        int $status = null
+        int $status = null,
+        int|null $price_list_id = null
     ): array {
         $response = Http::withToken($this->getToken())->put($this->url . 'adduser', get_defined_vars());
         // dd($response->body());
