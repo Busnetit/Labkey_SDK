@@ -13,7 +13,7 @@ class KeysLKController extends AuthorizeLKController
     {
         $response = Http::withToken($this->getToken())->get($this->url . ($unused ? 'getunusednfc' : 'getallnfc'));
         $this->badRequest($response);
-        if($response->json('status') != 'KO'){
+        if ($response->json('status') != 'KO') {
             return $response->json('message');
         }
         return [];
@@ -23,7 +23,7 @@ class KeysLKController extends AuthorizeLKController
     {
         $response = Http::withToken($this->getToken())->post($this->url . 'updatepinpad', get_defined_vars());
         $this->badRequest($response);
-        if($response->json('status') != 'KO'){
+        if ($response->json('status') != 'KO') {
             return $response->json('message');
         }
         return [];
@@ -33,7 +33,7 @@ class KeysLKController extends AuthorizeLKController
     {
         $response = Http::withToken($this->getToken())->get($this->url . "getunusednfc");
         $this->badRequest($response);
-        if($response->json('status') != 'KO'){
+        if ($response->json('status') != 'KO') {
             return $response->json('message');
         }
         return [];
@@ -46,7 +46,7 @@ class KeysLKController extends AuthorizeLKController
     {
         $response = Http::withToken($this->getToken())->put($this->url . "addkey", get_defined_vars());
         $this->badRequest($response);
-        if($response->json('status') != 'KO'){
+        if ($response->json('status') != 'KO') {
             return $response->json('message');
         }
         return [];
@@ -54,9 +54,19 @@ class KeysLKController extends AuthorizeLKController
 
     public function getQrCode(int $user_id)
     {
-        $response = Http::withToken($this->getToken())->post($this->url . "getqrcode",get_defined_vars());
+        $response = Http::withToken($this->getToken())->post($this->url . "getqrcode", get_defined_vars());
         $this->badRequest($response);
-        if($response->json('status') != 'KO'){
+        if ($response->json('status') != 'KO') {
+            return $response->json('message');
+        }
+        return [];
+    }
+
+    public function getAllPinpad(int|null $limit = null, int|null $offest)
+    {
+        $response = Http::withToken($this->getToken())->get($this->url . "getallpinpad", get_defined_vars());
+        $this->badRequest($response);
+        if ($response->json('status') != 'KO') {
             return $response->json('message');
         }
         return [];
