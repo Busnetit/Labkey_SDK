@@ -301,7 +301,7 @@ class UserLKController extends AuthorizeLKController
      */
     public function getGrantInfo(int $involved_associations): array
     {
-        $response = Http::withToken($this->getToken())->get($this->url . 'getGrantInfo', get_defined_vars());
+        $response = Http::withToken($this->getToken())->post($this->url . 'getGrantInfo', get_defined_vars());
         $this->badRequest($response);
         if ($response->json('status') === 'OK') {
             $response= $response->json();
