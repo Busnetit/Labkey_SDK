@@ -285,6 +285,7 @@ class UserLKController extends AuthorizeLKController
         bool $show_sender_name = true,
         string|null $message = null,
         string|null $cc_emails = null,
+        string|null $language = null
 
     ): string {
         $values = get_defined_vars();
