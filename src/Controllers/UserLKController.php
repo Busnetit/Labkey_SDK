@@ -275,6 +275,7 @@ class UserLKController extends AuthorizeLKController
      * @param bool $show_sender_name
      * @param string|null $message
      * @param string[]|null $cc_emails
+     * @param string|null $language
      * @return mixed
      */
     public function sendEmail(
