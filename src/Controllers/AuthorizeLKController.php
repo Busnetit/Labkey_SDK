@@ -20,14 +20,13 @@ class AuthorizeLKController extends Controller {
 
     public function __construct() {
        
-        $this->secret_key = getenv('LABKEY_API_SECRET_KEY');
-        $this->email = getenv('LABKEY_API_EMAIL');
-        $this->password = getenv('LABKEY_API_PASSWORD');  
-        $this->url = getenv('LABKEY_API_URI');
+        $this->secret_key = env('LABKEY_API_SECRET_KEY');
+        $this->email = env('LABKEY_API_EMAIL');
+        $this->password = env('LABKEY_API_PASSWORD');  
+        $this->url = env('LABKEY_API_URI');
         
-        //TODO etc ....
-        if(empty($this->secret_key) || empty($this->email)){
-           throw new \Exception("Configurazion is not valid, you have to set: LABKEY_API_SECRET_KEY, LABKEY_API_EMAIL ... as env");  
+        if(empty($this->secret_key) || empty($this->email) || empty($this->password) || empty($this->url)){
+           throw new \Exception("Configuration is not valid, you have to set: LABKEY_API_SECRET_KEY, LABKEY_API_EMAIL, LABKEY_API_PASSWORD, LABKEY_API_URI as env");  
         }
     }
 
