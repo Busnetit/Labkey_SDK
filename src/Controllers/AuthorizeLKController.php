@@ -36,7 +36,7 @@ class AuthorizeLKController extends Controller {
     protected function getToken() {
         if(empty(self::$barer) || (time()-self::$barer_last)>(5*60)){
             $client = new \GuzzleHttp\Client();
-            $response=Http::asForm()->withUserAgent('SDK-Labkey')->post($this->url.'authorize',['email'=>$this->email,'password'=>$this->password, 'secret_key'=>$this->secret_key]);
+            $response=Http::asForm()->withUserAgent('SDK-Labkey')->delete($this->url.'authorize',['email'=>$this->email,'password'=>$this->password, 'secret_key'=>$this->secret_key]);
             $this->badRequest($response);
             self::$barer= $response->json('token');
             self::$barer_last=time();
