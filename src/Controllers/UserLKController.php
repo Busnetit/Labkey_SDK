@@ -175,7 +175,8 @@ class UserLKController extends AuthorizeLKController
         string|null $sa = 'si',
         string|null $su = 'si',
         string|null $command_device_id = null,
-        array|null $id_rele = null
+        array|null $id_rele = null,
+        string|null $technology = null
     ): array {
         $data[$unique_name] = [
             'tt' => $tt,
@@ -219,6 +220,9 @@ class UserLKController extends AuthorizeLKController
         }
         if (!empty($id_rele)) {
             $data[$unique_name]['id_rele'] = $id_rele;
+        }
+        if (!empty($technology)) {
+            $data[$unique_name]['technology'] = $technology;
         }
 
         return $this->doGrantAccess($user_id, json_encode($data), $key_id);
