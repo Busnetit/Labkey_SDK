@@ -290,8 +290,8 @@ class UserLKController extends AuthorizeLKController
         bool $show_sender_name = true,
         string|null $message = null,
         string|null $cc_emails = null,
-        string|null $language = null
-
+        string|null $language = null,
+        string|null $alternative_to = null
     ): string {
         $values = get_defined_vars();
         $values['operator_email'] = $this->email;
