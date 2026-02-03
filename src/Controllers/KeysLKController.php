@@ -52,7 +52,7 @@ class KeysLKController extends AuthorizeLKController
         return [];
     }
 
-    public function getQrCode(int $user_id)
+    public function getQrCode(int $user_id, int|null $image=null, int|null $with_background=null)
     {
         $response = Http::withToken($this->getToken())->post($this->url . "getqrcode", get_defined_vars());
         $this->badRequest($response);
