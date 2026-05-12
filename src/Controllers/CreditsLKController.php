@@ -39,4 +39,21 @@ class CreditsLKController extends AuthorizeLKController
         return[];
     }
 
+    public function getuserswithexpiredcredits(int $expiring_days){
+        $response=Http::withToken($this->getToken())->post($this->url.'getuserswithexpiredcredits',get_defined_vars());
+        $this->badRequest($response);
+        if($response->json('status') != 'KO'){
+            return $response->json('message');
+        }
+        return[];
+    }
+
+    public function expirecredits(int $expiring_days){
+        $response=Http::withToken($this->getToken())->post($this->url.'expirecredits',get_defined_vars());
+        $this->badRequest($response);
+        if($response->json('status') != 'KO'){
+            return $response->json('message');
+        }
+        return[];
+    }
 }
