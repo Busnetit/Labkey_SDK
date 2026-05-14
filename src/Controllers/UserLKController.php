@@ -302,6 +302,21 @@ class UserLKController extends AuthorizeLKController
         return $response->json('message');
     }
 
+    /**
+     * @param int $id_user
+     * @param string $message
+     * @return string
+     */
+    public function sendSMS(
+        int $id_user,
+        string $message,
+    ): string {
+        $values = get_defined_vars();
+        $response = Http::withToken($this->getToken())->post($this->url . 'sendsms', $values);
+        $this->badRequest($response);
+        return $response->json('message');
+    }
+
 
     /**
      * @param int $user_id
