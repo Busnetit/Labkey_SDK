@@ -336,9 +336,10 @@ class UserLKController extends AuthorizeLKController
     }
 
 
-    public function dropAccess(int $involved_associations): array 
+    public function dropAccess(int|array $involved_associations): array
     {
-        $response = Http::withToken($this->getToken())->delete($this->url . 'dropaccess', get_defined_vars());
+        $payload = ['involved_associations' => is_array($involved_associations) ? $involved_associations : [$involved_associations]];
+        $response = Http::withToken($this->getToken())->delete($this->url . 'dropaccess', $payload);
         $this->badRequest($response);
         if ($response->json('status') === 'OK') {
             $response = $response->json();
@@ -347,7 +348,4 @@ class UserLKController extends AuthorizeLKController
         }
         return [];
     }
-
-
-
 }
