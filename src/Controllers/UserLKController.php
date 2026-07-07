@@ -310,11 +310,13 @@ class UserLKController extends AuthorizeLKController
     /**
      * @param int $id_user
      * @param string $message
+     * @param string|null $phone
      * @return string
      */
     public function sendSMS(
         int $id_user,
         string $message,
+        string|null $phone
     ): string {
         $values = get_defined_vars();
         $response = Http::withToken($this->getToken())->post($this->url . 'sendsms', $values);
@@ -350,6 +352,29 @@ class UserLKController extends AuthorizeLKController
             $response = $response->json();
             unset($response['status']);
             return $response;
+        }
+        return [];
+    }
+
+    /**
+     * @param int $user_id
+     * @param bool|null $image
+     * @param bool|null $with_background
+     * @param bool|null $url
+     * @return array
+     */
+    public function getQrCode(
+        int $user_id,
+        bool|null $image = false,
+        bool|null $with_background = false,
+        bool|null $url = false
+    ): array {
+        $response = Http::withToken($this->getToken())->post($this->url . 'getqrcode', get_defined_vars());
+        $this->badRequest($response);
+        if ($response->json('status') === 'OK') {
+            $result = $response->json();
+            unset($result['status']);
+            return $result;
         }
         return [];
     }
