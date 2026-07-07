@@ -280,6 +280,10 @@ class UserLKController extends AuthorizeLKController
      * @param string|null $message
      * @param string[]|null $cc_emails
      * @param string|null $language
+     * @param string|null $alternative_to
+     * @param string|null $template
+     * @param string|null $template_data
+     * @param string|null $subject
      * @return mixed
      */
     public function sendEmail(
@@ -293,7 +297,8 @@ class UserLKController extends AuthorizeLKController
         string|null $language = null,
         string|null $alternative_to = null,
         string|null $template = null,
-        string|null $template_data = null
+        string|null $template_data = null,
+        string|null $subject = null
     ): string {
         $values = get_defined_vars();
         $values['operator_email'] = $this->email;
