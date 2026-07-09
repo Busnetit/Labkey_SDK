@@ -1,6 +1,6 @@
 {
     "name": "labkey/sdk",
-    "version": "1.5.4",
+    "version": "1.5.5",
     "description": "SDK for developent LABKEY API",
     "type": "library",
     "authors": [
